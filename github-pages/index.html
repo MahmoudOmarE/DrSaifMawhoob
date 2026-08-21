@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0D1210">
+  <title>Service Brain — عيادة د. سيف موهوب</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0D1210;--bg-raised:#131A17;--panel:#17201C;--signal:#3FE0C0;--signal-dim:#1F5148;--gold:#D9A441;--alert:#C4635A;--text:#EAEDE9;--text-dim:#8FA098;--line:#25302B;--line-strong:#374840}
+    *{box-sizing:border-box;margin:0;padding:0}html,body{height:100%;overflow:hidden}body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans Arabic',sans-serif}button{font:inherit}button:not(:disabled){cursor:pointer}button:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
+    #deck{position:relative;width:100%;height:100%;background:var(--bg)}.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:6vh 8vw;opacity:0;pointer-events:none;transform:translateX(24px);transition:opacity .45s ease,transform .45s ease;overflow-y:auto}.slide.active{opacity:1;pointer-events:auto;transform:translateX(0)}.inside{width:100%;max-width:1160px;margin:auto}.eyebrow{font-family:'IBM Plex Mono',monospace;direction:ltr;text-align:right;color:var(--signal);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:16px;display:flex;gap:8px;align-items:center;justify-content:flex-end}.dot{width:6px;height:6px;background:var(--signal);border-radius:50%}h1{font-family:Tajawal,sans-serif;font-weight:900;font-size:clamp(28px,4vw,46px);color:#fff;line-height:1.3;max-width:900px}h1 span{color:var(--signal)}h2{font-family:Tajawal,sans-serif;font-weight:700;font-size:clamp(20px,2.4vw,28px);color:#fff;margin-bottom:6px}.lede{color:var(--text-dim);font-size:15px;max-width:720px;margin-top:14px;line-height:1.7}.small{margin-top:8px;font-size:13.5px}.panel{background:var(--panel);border:1px solid var(--line-strong);border-radius:6px;padding:18px 20px}.panel b{color:#fff}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.stack{display:grid;gap:14px}.mt8{margin-top:8px}.mt14{margin-top:14px}.mt16{margin-top:16px}.mt18{margin-top:18px}.signal{color:var(--signal)!important}.gold{color:var(--gold)!important}.alert{color:var(--alert)!important}.alert-border{border-color:var(--alert)}
+    table{width:100%;border-collapse:collapse;background:var(--bg-raised);border:1px solid var(--line);border-radius:5px;overflow:hidden;font-size:13.5px}th{background:#1A2420;text-align:right;padding:10px 14px;font-weight:600;color:var(--signal);font-size:11.5px;border-bottom:1px solid var(--line-strong)}td{padding:10px 14px;border-bottom:1px solid var(--line);color:var(--text);vertical-align:top;line-height:1.55}tr:last-child td{border-bottom:none}.label{width:30%;color:var(--text-dim)}.short{width:22%}.num{font-family:'IBM Plex Mono',monospace;direction:ltr;text-align:right;color:var(--signal)}.num.alert{color:var(--alert)}.compact{font-size:12.5px}.alternatives{font-size:11.4px;table-layout:fixed}.alternatives th,.alternatives td{padding:8px 9px;line-height:1.45}.alternatives td:first-child{color:#fff;font-weight:600}.flag{display:inline-block;background:rgba(196,99,90,.12);color:#E0A088;border:1px solid rgba(196,99,90,.35);font-size:12px;padding:3px 10px;border-radius:3px;margin-top:12px}.flag.ok{background:rgba(63,224,192,.08);border-color:rgba(63,224,192,.3);color:#B8E8DC}ul.plain{list-style:none}ul.plain li{position:relative;padding-right:16px;margin-bottom:8px;font-size:14px;color:var(--text-dim);line-height:1.6}ul.plain li::before{content:'—';position:absolute;right:0;color:var(--gold)}ul.plain li b{color:var(--text);font-weight:500}.strategy{border-color:var(--signal-dim)}.strategy p{font-family:Tajawal,sans-serif;font-weight:700;font-size:16px;color:#fff;line-height:1.9}
+    #progress{position:fixed;top:0;right:0;left:0;height:3px;background:var(--line);z-index:50}#progress-bar{height:100%;background:linear-gradient(90deg,var(--signal),var(--signal-dim));transition:width .4s ease}#dots{position:fixed;bottom:22px;right:50%;transform:translateX(50%);display:flex;gap:8px;z-index:50}.navdot{width:7px;height:7px;border:0;border-radius:50%;background:var(--line-strong);transition:.25s}.navdot.active{width:20px;border-radius:4px;background:var(--signal)}.arrow{position:fixed;top:50%;width:42px;height:42px;border-radius:50%;background:var(--panel);border:1px solid var(--line-strong);color:var(--text);display:flex;align-items:center;justify-content:center;font-size:18px;z-index:50;user-select:none;transform:translateY(-50%);transition:.2s}.arrow:not(:disabled):hover{border-color:var(--signal);color:var(--signal)}.arrow:disabled{opacity:.27;cursor:not-allowed}#prev{right:20px}#next{left:20px}#counter{position:fixed;top:16px;left:24px;font-family:'IBM Plex Mono',monospace;direction:ltr;font-size:12px;color:var(--text-dim);z-index:50}
+    @media(max-width:820px){.slide{padding:68px 20px 82px;justify-content:flex-start}.inside{margin:auto 0}.grid2{grid-template-columns:1fr}.eyebrow{font-size:10px;margin-bottom:12px}h1{font-size:clamp(27px,8.6vw,40px);line-height:1.4}h2{font-size:clamp(21px,6.8vw,29px)}.lede{font-size:13px}.compact,table{font-size:11px}td,th{padding:8px}.compact td,.compact th{padding:7px}.label,.short{width:34%}.alternatives{font-size:10.5px}.alternatives th,.alternatives td{padding:7px 5px}.arrow{width:38px;height:38px}#prev{right:10px}#next{left:10px}#dots{bottom:16px}}
+    @media(prefers-reduced-motion:reduce){.slide,#progress-bar,.navdot{transition:none}}
+  </style>
+</head>
+<body>
+  <div id="progress"><div id="progress-bar"></div></div>
+  <div id="counter"><span id="current">01</span> / <span id="total">12</span></div>
+
+  <main id="deck">
+    <section class="slide active">
+      <div class="inside"><div class="eyebrow"><span>Service Brain</span><span class="dot"></span></div><h1>عيادة د. سيف موهوب — <span>خريطة الخدمة الاستراتيجية الكاملة</span></h1><p class="lede">11 قسم — من نواة خدمة طب الأطفال وحديثي الولادة حتى الاستراتيجية النهائية في جملة واحدة.</p></div>
+    </section>
+
+    <section class="slide"><div class="inside"><div class="eyebrow"><span>01 · Service Core · جوهر الخدمة</span><span class="dot"></span></div><h2>نواة الخدمة</h2><table class="mt18"><tbody>
+      <tr><td class="label">الخدمة</td><td>خدمة الكشف والمتابعة الطبية لطب الأطفال وحديثي الولادة — عيادة د. سيف موهوب</td></tr>
+      <tr><td class="label">الفئة</td><td>Local Healthcare / Pediatric Care — خدمة طبية محلية B2C في الشرقية، مصر</td></tr>
+      <tr><td class="label">نطاق السعر</td><td>🔶 غير محدد — يحتاج تأكيد سعر الكشف الأول والمتابعة والفرق بين الموقعين</td></tr>
+      <tr><td class="label">نوع الخدمة</td><td>خدمة مباشرة: كشف، استشارة، ومتابعة دورية تُسلّم وقت الزيارة</td></tr>
+      <tr><td class="label">الجمهور</td><td>أمهات وآباء حديثي الولادة وحتى 5 سنوات في أبو حماد والعباسة ومحيطهما</td></tr>
+      <tr><td class="label">المنصة</td><td>Facebook — 51K متابع؛ TikTok والحساب الشخصي قنوات مساندة غير موحّدة</td></tr>
+    </tbody></table></div></section>
+
+    <section class="slide"><div class="inside"><div class="eyebrow"><span>02 · Service Breakdown · تفكيك الخدمة</span><span class="dot"></span></div><h2>بيعمل إيه بالظبط، وإزاي</h2><div class="grid2 mt16">
+      <div class="panel"><b>إيه اللي بيعمله فعلاً</b><p class="lede small">كشف وتشخيص ومتابعة متخصصة: تقييم النمو، التطعيمات، استشارات الرضاعة والتغذية، ومتابعة الأعراض غير الطبيعية.</p></div>
+      <div class="panel"><b>خطوة بخطوة</b><ul class="plain mt8"><li>حجز الموعد — واتساب موصى به</li><li>الحضور لأحد الموقعين</li><li>الكشف والتشخيص</li><li>توضيح العلاج أو الخطة</li><li>موعد متابعة عند الحاجة</li></ul></div>
+      <div class="panel"><b>قبل</b><p class="lede small">قلق وتخمين ونصائح غير طبية قد تؤخر ملاحظة مشكلة نمو أو موعد تطعيم مهم.</p></div>
+      <div class="panel"><b>بعد</b><p class="lede small">طمأنينة، متابعة موثقة مع نفس الطبيب، وجدول تطعيمات واضح.</p></div>
+    </div><div class="flag">🔶 المدة، وجود معمل أو أشعة، وخط الحالات المستعجلة خارج المواعيد تحتاج تأكيداً من العيادة</div></div></section>
+
+    <section class="slide"><div class="inside"><div class="eyebrow"><span>03 · Problem ID · تحديد المشكلة</span><span class="dot"></span></div><h2>3 مستويات للمشكلة</h2><div class="stack mt18">
+      <div class="panel"><b class="signal">SURFACE — الظاهرة</b><p class="lede small">«عايزة دكتور أطفال كويس وقريب مني» أو «محتاجة أعرف معاد التطعيم الجاي إمتى».</p></div>
+      <div class="panel"><b class="gold">DEEP — الأعمق</b><p class="lede small">القلق من أن تجاهل عرض بسيط أو التأخر في قرار طبي يتحول إلى مشكلة صحية أكبر، مع غياب الثقة في تشخيص غير متخصص.</p></div>
+      <div class="panel alert-border"><b class="alert">HIDDEN — الخفية</b><p class="lede small">الخوف من ألا تكون «أماً كافية» إذا فاتت علامة مبكرة، وما يصاحبه من شعور بالمسؤولية والذنب.</p></div>
+    </div></div></section>
+
+    <section class="slide"><div class="inside"><div class="eyebrow"><span>04 · Context Mapping · خريطة السياق</span><span class="dot"></span></div><h2>امتى وفين وليه بتحصل المشكلة</h2><table class="mt18"><tbody>
+      <tr><td class="label short">امتى؟</td><td>بعد الولادة مباشرة، عند استحقاق تطعيم، أو عند حرارة أو طفح أو بكاء مستمر.</td></tr>
+      <tr><td class="label short">فين؟</td><td>في البيت عند ملاحظة العرض، أو أونلاين على فيسبوك وجروبات الأمهات المحلية.</td></tr>
+      <tr><td class="label short">بيدور إزاي؟</td><td>يسأل أمهات أخريات، يبحث عن دكتور قريب، أو يراجع توصيات وتجارب سابقة.</td></tr>
+      <tr><td class="label short">بيفكر في إيه؟</td><td>«الدكتور ده موثوق؟» / «هيرد بسرعة لو الوضع مستعجل؟»</td></tr>
+      <tr><td class="label short">الخطر</td><td>أي تأخر في الاستجابة خلال أول 30 دقيقة قد يدفع العميل إلى بديل آخر.</td></tr>
+      <tr><td class="label short">المحفز</td><td>عرض غير طبيعي، تطعيم مستحق، أو توصية مباشرة من أم جرّبت العيادة.</td></tr>
+    </tbody></table></div></section>
+
+    <section class="slide"><div class="inside"><div class="eyebrow"><span>05 · Current Solutions · البدائل الحالية</span><span class="dot"></span></div><h2>ليه البدائل الموجودة بتفشل</h2><table class="mt16 alternatives"><thead><tr><th>المنافس</th><th>ما الذي يجعله منافساً؟</th><th>أقوى طبقة في الرحلة</th><th>أين يضعف؟</th><th>تهديده الفعلي</th></tr></thead><tbody>
+      <tr><td>د. محمد صلاح الدين</td><td>4.4/5 من 12 مراجعة، شارع الجيش، هاتف مباشر</td><td>الثقة المحلية والاكتشاف</td><td>لا تخصص فرعي أو مؤهل تفصيلي أو حجز منظم ظاهر</td><td>مرتفع في البحث المحلي العاجل</td></tr>
+      <tr><td>د. ماجد شعيب عاصي</td><td>5/5 من مراجعتين، قريب جداً، هاتف وعنوان</td><td>الانطباع الأول والتقييم</td><td>عينة صغيرة جداً؛ لا خدمات ولا مسار حجز ظاهر</td><td>متوسط؛ يفوز بالقرار السريع لا الثقة الطويلة</td></tr>
+      <tr><td>مركز د. محمد رجب</td><td>5/5 من 6 مراجعات، هاتف وساعات ظاهرة</td><td>التقييم والاتصال</td><td>لا مؤهل أكاديمي أو خدمات حديثي ولادة أو حجز إلكتروني</td><td>متوسط إلى مرتفع في المكالمات المحلية</td></tr>
+      <tr><td>دار الطفل</td><td>3.5/5 من 50 مراجعة، كيان واسع وساعات «Always open»</td><td>اتساع العرض والحضور المؤسسي</td><td>تقييم أقل وتصنيف Google غير واضح؛ الطبيب الفرد غير ظاهر</td><td>مرتفع للعائلات التي تريد مركزاً شاملاً أو ساعات مرنة</td></tr>
+      <tr><td>د. أحمد فكري</td><td>صفحة محلية بـ 8.7K متابع، هاتف، وذكر الكشف بالسونار</td><td>Facebook والاسم المحلي</td><td>لا مراجعات Google ظاهرة، ولا مؤهلات أو حجز منظم</td><td>مرتفع على Facebook، وأقل على Google</td></tr>
+      <tr><td>د. علي الروبي</td><td>4.8/5 من 31 مراجعة، أخصائي أطفال وحديثي الولادة</td><td>الثقة الاجتماعية المتراكمة</td><td>يبعد نحو 2.13 كم ولا تظهر كل تفاصيل العرض في Maps</td><td>تهديد ثانوي قوي بسبب حجم المراجعات</td></tr>
+    </tbody></table><div class="flag ok">✓ التفوق لا يأتي من القرب فقط: «مؤهل واضح + فرعان محددان + مواعيد مؤكدة + حجز WhatsApp» ينقل القرار من البحث إلى الحجز.</div></div></section>
+
+    <section class="slide"><div class="inside"><div class="eyebrow"><span>06 · Unique Mechanism · الميكانيزم الفريد</span><span class="dot"></span></div><h2>ليه العيادة مختلفة فعلاً</h2>
+      <div class="panel mt16"><b>الشرح البسيط</b><p class="lede small">دكتور واحد حاصل على ماجستير في حديثي الولادة يتابع الطفل في موقعين قريبين، بدلاً من الانتقال بين أطباء مختلفين في كل زيارة.</p></div>
+      <div class="panel mt14"><b>ليه ده منطقي</b><p class="lede small">التخصص الدقيق + ثبات نفس الطبيب يصنعان سجل متابعة متصلاً للنمو، بدلاً من تشخيص منقطع كما يحدث غالباً في الخدمات العامة.</p></div>
+      <div class="flag ok">✓ التخصص الأكاديمي الواضح + متابعة ثابتة + موقعان قريبان = بديل أكثر طمأنة من المستشفى الواسع أو الحجز غير الواضح</div>
+    </div></section>
+
+    <section class="slide"><div class="inside"><div class="eyebrow"><span>07 · Competitive · المنافسون</span><span class="dot"></span></div><h2>الفجوة في السوق</h2><table class="mt18"><thead><tr><th>المنافس</th><th>القوة</th><th>الضعف / الفجوة</th></tr></thead><tbody>
+      <tr><td>د. محمد صلاح الدين</td><td>0.27 كم، تقييم 4.4/5 من 12 مراجعة</td><td>تخصص حديثي الولادة غير واضح — أبرز الماجستير والحجز الموحد</td></tr>
+      <tr><td>عيادة د. ماجد شعيب</td><td>0.39 كم، تقييم 5.0/5</td><td>عينة مراجعات صغيرة جداً: مراجعتان فقط</td></tr>
+      <tr><td>مركز د. محمد رجب</td><td>0.56 كم، تقييم 5.0/5 من 6 مراجعات</td><td>التخصص غير بارز — هذه هي الميزة الممكنة</td></tr>
+      <tr><td>دار الطفل</td><td>حجم كبير و50 مراجعة</td><td>تقييم 3.5 وخدمات عامة؛ ينافس على الشمول لا التخصص</td></tr>
+      <tr><td>د. علي الروبي</td><td>تخصص مذكور و31 مراجعة</td><td>يبعد 2.13 كم، مما يدعم أفضلية القرب</td></tr>
+    </tbody></table><div class="flag">⚠ Google Business Profile للعيادة غير ظاهر بوضوح: بناء الملف وجمع أول 10 تقييمات حقيقية أولوية فورية</div></div></section>
+
+    <section class="slide"><div class="inside"><div class="eyebrow"><span>08 · Reason to Believe · سبب اختيار الخدمة</span><span class="dot"></span></div><h2>إيه عندنا فعلياً وإيه الناقص</h2><table class="mt16 compact"><thead><tr><th>نوع الدليل</th><th>الوضع الحالي</th><th>متاح؟</th></tr></thead><tbody>
+      <tr><td>نتيجة مرئية</td><td>صور العيادة والشهادات وفريق العمل مناسبة، مع احترام خصوصية المرضى</td><td class="num">جزئياً</td></tr>
+      <tr><td>أرقام وإحصائيات</td><td>عدد الحالات وسنوات الخبرة يحتاجان تأكيداً رقمياً من العيادة</td><td class="num">غير مؤكد</td></tr>
+      <tr><td>قبل / بعد</td><td>غير مناسب كصيغة تقليدية للخدمات الطبية وخصوصية المرضى</td><td class="num alert">لأ</td></tr>
+      <tr><td>تقييمات حقيقية</td><td>تقييم واحد تقريباً على صفحة 51K متابع — فجوة أولوية</td><td class="num alert">لأ</td></tr>
+      <tr><td>شهادة خبير</td><td>ماجستير طب الأطفال وحديثي الولادة وبكالوريوس طب وجراحة من الأزهر</td><td class="num">متاح</td></tr>
+      <tr><td>سياسة متابعة</td><td>تحتاج قراراً واضحاً بشأن الحالات التي تتطلب إعادة كشف قريباً</td><td class="num">غير مؤكد</td></tr>
+    </tbody></table><div class="flag">⚠ أقوى دليل جاهز الآن هو التخصص الأكاديمي؛ لا تضعه في الخلفية</div></div></section>
+
+    <section class="slide"><div class="inside"><div class="eyebrow"><span>09 · Objections · الاعتراضات</span><span class="dot"></span></div><h2>أهم 5 اعتراضات وردودها</h2><table class="mt16 compact"><thead><tr><th>الاعتراض</th><th>الرد المقترح</th><th>الاستخدام في الكريتيف</th></tr></thead><tbody>
+      <tr><td>«هل هو متخصص فعلاً؟»</td><td>إبراز ماجستير حديثي الولادة بشكل واضح</td><td>عرض الشهادة كنص واضح في كل إعلان أو Reel</td></tr>
+      <tr><td>«بعيد عني»</td><td>توضيح أبو حماد والعباسة، المواعيد والخرائط</td><td>منشور مثبت للموقعين وساعات العمل</td></tr>
+      <tr><td>«غالي»</td><td>«كشف تعارف بسعر واضح» حتى اعتماد الرقم</td><td>دعوة فعلية تعد بالوضوح لا برقم غير مؤكد</td></tr>
+      <tr><td>«هيرد بسرعة؟»</td><td>زمن رد متوقع عبر واتساب في أوقات العمل</td><td>رسالة ترحيب تلقائية تحدد توقع الاستجابة</td></tr>
+      <tr><td>«فين التقييمات؟»</td><td>طلب تقييم حقيقي موحّد بعد كل زيارة</td><td>إظهار التقييمات الأولى عند توفرها</td></tr>
+    </tbody></table></div></section>
+
+    <section class="slide"><div class="inside"><div class="eyebrow"><span>10 · Buying Triggers · محفزات الشراء</span><span class="dot"></span></div><h2>أقوى المحفزات بالأولوية</h2><div class="grid2 mt16">
+      <ul class="plain"><li><b>عرض غير طبيعي</b> — طمأنة سريعة وزر واتساب مباشر (أولوية عالية جداً)</li><li><b>توصية من أم جربت</b> — أهم دليل ثقة اجتماعي (أولوية عالية جداً)</li><li><b>تطعيم مستحق</b> — محتوى بجدول واضح قبل الموعد المتوقع</li></ul>
+      <ul class="plain"><li><b>قرب الولادة</b> — تعريف استباقي للحوامل في الشهر الأخير</li><li><b>موقع ومواعيد واضحة</b> — يقلل الاحتكاك قبل الاتصال</li><li><b>رد سريع وواضح</b> — ميزة عملية وقت القلق</li></ul>
+    </div></div></section>
+
+    <section class="slide"><div class="inside"><div class="eyebrow"><span>11 · Strategy · الاستراتيجية</span><span class="dot"></span></div><h2>الاستراتيجية في جملة واحدة</h2><div class="grid2 mt16">
+      <div class="panel"><b class="signal">الخدمة</b><p class="lede small">كشف ومتابعة متخصصة لطب الأطفال وحديثي الولادة.</p></div>
+      <div class="panel"><b class="signal">الجمهور</b><p class="lede small">أمهات أطفال حديثي الولادة وحتى 5 سنوات في أبو حماد والعباسة.</p></div>
+      <div class="panel"><b class="signal">المشكلة</b><p class="lede small">غياب مسار ثقة وحجز واضح عند القلق من تشخيص غير متخصص.</p></div>
+      <div class="panel"><b class="signal">الميكانيزم</b><p class="lede small">تخصص ماجستير + طبيب ثابت + موقعان قريبان.</p></div>
+    </div><div class="panel strategy mt16"><p>«نقدّم متابعة طبية متخصصة لحديثي الولادة والأطفال لأمهات في أبو حماد والعباسة القلقانين من غياب تشخيص دقيق وموثوق، عن طريق دكتور واحد حاصل على ماجستير في هذا التخصص بمتابعة ثابتة في موقعين قريبين.»</p></div></div></section>
+  </main>
+
+  <button id="prev" class="arrow" type="button" aria-label="الشريحة السابقة">→</button>
+  <button id="next" class="arrow" type="button" aria-label="الشريحة التالية">←</button>
+  <nav id="dots" aria-label="شرائح العرض"></nav>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const progress = document.getElementById('progress-bar');
+    const current = document.getElementById('current');
+    const total = document.getElementById('total');
+    const dots = document.getElementById('dots');
+    const prev = document.getElementById('prev');
+    const next = document.getElementById('next');
+    let index = 0;
+    let touchX = 0;
+
+    total.textContent = String(slides.length).padStart(2, '0');
+    slides.forEach((_, position) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'navdot' + (position === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'انتقل إلى الشريحة ' + (position + 1));
+      dot.addEventListener('click', () => go(position));
+      dots.appendChild(dot);
+    });
+
+    function go(nextIndex) {
+      if (nextIndex < 0 || nextIndex >= slides.length || nextIndex === index) return;
+      slides[index].classList.remove('active');
+      dots.children[index].classList.remove('active');
+      index = nextIndex;
+      slides[index].classList.add('active');
+      dots.children[index].classList.add('active');
+      current.textContent = String(index + 1).padStart(2, '0');
+      progress.style.width = ((index + 1) / slides.length * 100) + '%';
+      prev.disabled = index === 0;
+      next.disabled = index === slides.length - 1;
+    }
+
+    progress.style.width = (1 / slides.length * 100) + '%';
+    prev.disabled = true;
+    prev.addEventListener('click', () => go(index - 1));
+    next.addEventListener('click', () => go(index + 1));
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') go(index + 1);
+      if (event.key === 'ArrowRight') go(index - 1);
+    });
+    document.addEventListener('touchstart', (event) => { touchX = event.touches[0].clientX; }, { passive: true });
+    document.addEventListener('touchend', (event) => {
+      const distance = event.changedTouches[0].clientX - touchX;
+      if (distance > 50) go(index - 1);
+      if (distance < -50) go(index + 1);
+    }, { passive: true });
+  </script>
+</body>
+</html>
