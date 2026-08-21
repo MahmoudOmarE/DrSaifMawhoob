@@ -1,25 +1,69 @@
-import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
-import { Streamdown } from 'streamdown';
+/** فلسفة «إشارات سريرية»: الاستنتاج قبل الدليل، وعناصر بصرية دافئة لا داشبورد نمطي. */
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowLeft, ArrowRight, ChevronLeft, CircleAlert, ClipboardCheck, HeartPulse, MapPinned, MessageCircleMore, MoveUpRight, Navigation, Quote, ShieldCheck, Sparkles, Star, Stethoscope } from "lucide-react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { Bar, BarChart, CartesianGrid, Cell, LabelList, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
-/**
- * All content in this page are only for example, replace with your own feature implementation
- * When building pages, remember your instructions in Frontend Best Practices, Design Guide and Common Pitfalls
- */
+const asset = {
+  hero: "/manus-storage/clinical-signals-hero_4d477e5e.jpg",
+  parent: "/manus-storage/parent-confidence_ce762533.jpg",
+  market: "/manus-storage/local-market-signal_3663f558.jpg",
+  framework: "/manus-storage/action-framework_63129a5c.jpg",
+  mark: "/manus-storage/clinical-signals-mark_85ccad39.png",
+};
+
+const slides = [
+  ["01", "الافتتاح", "إشارة السوق"], ["02", "المنتج", "وعد المتابعة"], ["03", "العميل", "قلق يحتاج يقيناً"], ["04", "المنافسة", "الفراغ القابل للفوز"], ["05", "الميزة", "تخصص + استمرارية"], ["06", "الاعتراضات", "أزل الاحتكاك"], ["07", "المحفزات", "خاطب لحظة القرار"], ["08", "الخلاصة", "خطة الحركة"],
+];
+
+const competitors = [
+  { name: "محمد صلاح", rating: 4.4, reviews: 12, distance: "0.27 كم", note: "تخصص حديثي الولادة غير واضح" },
+  { name: "ماجد شعيب", rating: 5, reviews: 2, distance: "0.39 كم", note: "عينة مراجعات صغيرة جداً" },
+  { name: "محمد رجب", rating: 5, reviews: 6, distance: "0.56 كم", note: "التخصص لا يتصدر الرسالة" },
+  { name: "دار الطفل", rating: 3.5, reviews: 50, distance: "0.64 كم", note: "شمول أكبر، وتخصص أعمق أقل" },
+  { name: "علي الروبي", rating: 4.8, reviews: 31, distance: "2.13 كم", note: "قوي، لكن أبعد جغرافياً" },
+];
+
+const objections = [
+  { type: "الثقة", title: "هل هو متخصص في حديثي الولادة فعلاً؟", response: "يتقدم الماجستير في حديثي الولادة كدليل واضح في كل مادة، لا كحاشية تعريفية.", creative: "شهادة أكاديمية بارزة في بداية الإعلان أو الـ Reel.", icon: ShieldCheck },
+  { type: "الوصول", title: "هل الموقع بعيد عني؟", response: "يوضّح الموقعان، أبو حماد والعباسة، بدقة مع المواعيد وخرائط الوصول.", creative: "منشور مثبت: موقعان، مواعيد واضحة، وخطوة حجز واحدة.", icon: MapPinned },
+  { type: "السعر", title: "هل الكشف غالٍ؟", response: "قبل تأكيد الرقم، تُستخدم صياغة «كشف تعارف بسعر واضح» بلا ادعاء سعري غير موثق.", creative: "دعوة فعلية تَعِد بالوضوح، لا برقم لم يتم اعتماده.", icon: CircleAlert },
+  { type: "الاستجابة", title: "هل سيردون عند القلق؟", response: "رسالة ترحيب تحدد زمن رد متوقع في أوقات العمل، مع مسار واتساب مباشر.", creative: "أظهر الزمن المتوقع للرد بوصفه جزءاً من خدمة الطمأنة.", icon: MessageCircleMore },
+  { type: "المصداقية", title: "كيف أثق بلا تقييمات ظاهرة؟", response: "تجمع العيادة تقييمات حقيقية موحّدة بعد الزيارة، بالتوازي مع الحملة.", creative: "لا تُصنع شهادات؛ تُبنى إثباتات اجتماعية موثقة بالتدريج.", icon: Star },
+];
+
+const triggers = [
+  { label: "تطعيم مستحق", type: "منطقي", priority: "عالية", action: "محتوى مبسط يذكّر بجدول التطعيم قبل موعده المتوقع." },
+  { label: "عرض غير طبيعي", type: "عاطفي", priority: "عالية جداً", action: "إعلان طمأنة سريع مع زر واتساب مباشر بلا مسار معقد." },
+  { label: "توصية أم أخرى", type: "ثقة اجتماعية", priority: "عالية جداً", action: "اجمع تقييمات حقيقية من المرضى الحاليين؛ إنها الفجوة الأوضح." },
+  { label: "قرب الولادة", type: "عاطفي", priority: "عالية", action: "رسالة استباقية للحوامل في الشهر الأخير حول بداية المتابعة." },
+  { label: "موقع ومواعيد", type: "منطقي", priority: "عالية", action: "منشور مثبت يجيب عن المكان والوقت قبل أن تبدأ المحادثة." },
+  { label: "رد سريع", type: "عاطفي / منطقي", priority: "عالية", action: "إبراز سرعة الرد في أوقات العمل بوصفها ميزة عملية." },
+];
+
+function Eyebrow({ children, ink = false }: { children: React.ReactNode; ink?: boolean }) { return <p className={`eyebrow ${ink ? "eyebrow--ink" : ""}`}>{children}</p>; }
+function Pill({ children, coral = false, dark = false }: { children: React.ReactNode; coral?: boolean; dark?: boolean }) { return <span className={`pill ${coral ? "pill--coral" : ""} ${dark ? "pill--dark" : ""}`}>{children}</span>; }
+
 export default function Home() {
-  // If theme is switchable in App.tsx, we can implement theme toggling like this:
-  // const { theme, toggleTheme } = useTheme();
+  const [current, setCurrent] = useState(0);
+  const [dir, setDir] = useState(1);
+  const [objectionIndex, setObjectionIndex] = useState(0);
+  const [filter, setFilter] = useState("الكل");
+  const go = useCallback((next: number) => { const safe = Math.max(0, Math.min(slides.length - 1, next)); if (safe !== current) { setDir(safe > current ? 1 : -1); setCurrent(safe); } }, [current]);
+  useEffect(() => { const key = (e: KeyboardEvent) => { if (["ArrowLeft", "ArrowDown", "PageDown"].includes(e.key)) { e.preventDefault(); go(current + 1); } if (["ArrowRight", "ArrowUp", "PageUp"].includes(e.key)) { e.preventDefault(); go(current - 1); } if (e.key === "Home") go(0); if (e.key === "End") go(slides.length - 1); }; window.addEventListener("keydown", key); return () => window.removeEventListener("keydown", key); }, [current, go]);
+  const visibleTriggers = useMemo(() => filter === "الكل" ? triggers : triggers.filter(t => t.type.includes(filter)), [filter]);
+  const anim = { initial: { opacity: 0, x: dir * -34, filter: "blur(5px)" }, animate: { opacity: 1, x: 0, filter: "blur(0px)" }, exit: { opacity: 0, x: dir * 28, filter: "blur(3px)" }, transition: { duration: .34, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] } };
 
-  return (
-    <div className="min-h-screen flex flex-col">
-      <main>
-        {/* Example: lucide-react for icons */}
-        <Loader2 className="animate-spin" />
-        Example Page
-        {/* Example: Streamdown for markdown rendering */}
-        <Streamdown>Any **markdown** content</Streamdown>
-        <Button variant="default">Example Button</Button>
-      </main>
-    </div>
-  );
+  const page = () => {
+    if (current === 0) return <section className="slide cover" aria-labelledby="title"><img className="cover__art" src={asset.hero} alt="تجريد بصري لإشارات الرعاية الصحية والسوق" /><div className="cover__shade" /><div className="cover__in"><div className="cover__top"><Pill dark>SIGNAL BRIEF / 01</Pill><span className="cover__source">ملف قرار — Product Intelligence / 2026</span></div><div className="cover__statement"><Eyebrow>التشخيص التجاري</Eyebrow><h1 id="title">التخصص الدقيق هو<br /><em>أصل الثقة</em> الأول.</h1><p>عندما يقلّ اليقين، لا تبحث الأم عن معلومات أكثر؛ تبحث عن علامة واضحة تثبت أن طفلها في متابعة تعرف تاريخه.</p><div className="diagnostic"><span><i />المؤشر <b>ثقة قابلة للبحث</b></span><span><i />القرار <b>أظهر التخصص قبل الخدمة</b></span></div></div><div className="cover__proof"><span><HeartPulse /> حديثو الولادة<br />وطب الأطفال</span><i /><span><b>أبو حماد + العباسة</b><small>الشرقية، مصر</small></span></div></div><div className="cover__hint">اسحب أو استخدم الأسهم <ArrowLeft /></div></section>;
+    if (current === 1) return <section className="slide product" aria-labelledby="title"><header className="heading"><div><Eyebrow>نواة المنتج / 01–02</Eyebrow><h2 id="title">ليست زيارة عابرة.<br />إنها متابعة تعرف تاريخ الطفل.</h2></div><div className="heading__mark"><Stethoscope />خدمة محلية B2C<br />الشرقية، مصر</div></header><div className="product__flow"><div><p className="lead">كشف وتشخيص ومتابعة متخصصة لحديثي الولادة والأطفال: نمو، تطعيمات، رضاعة، تغذية، وأعراض غير طبيعية.</p><div className="tags"><Pill>تقييم نمو</Pill><Pill>تطعيمات</Pill><Pill>رضاعة وتغذية</Pill><Pill>متابعة دورية</Pill></div></div><ol className="steps">{["حجز الموعد", "زيارة أحد الموقعين", "كشف وتشخيص", "توضيح الخطة", "متابعة عند الحاجة"].map((x,i)=><li key={x}><span>0{i+1}</span><b>{x}</b></li>)}</ol></div><div className="product__footer"><div className="before"><span>قبل</span><p>قلق وتخمين ونصيحة غير طبية قد تؤخر ملاحظة إشارة مهمة.</p></div><div className="after"><span>بعد</span><p>طمأنينة وسجل متابعة متصل وثقة في قرار طبي متخصص.</p></div><aside className="attention"><CircleAlert /><b>يتطلب تأكيداً من العيادة</b><p>السعر، مدة الكشف، وخيار التعامل مع الحالات العاجلة خارج المواعيد.</p></aside></div></section>;
+    if (current === 2) return <section className="slide audience" aria-labelledby="title"><div className="audience__img"><img src={asset.parent} alt="أم تحمل مولوداً في مساحة هادئة" /><div /><Pill dark>الأهل: من الولادة إلى 5 سنوات</Pill></div><div className="audience__body"><Eyebrow>المشكلة والسياق / 03–04</Eyebrow><h2 id="title">الطلب الظاهر بسيط.<br />لكن القلق أعمق.</h2><div className="layers"><article><span>01 / ظاهر</span><h3>«عايزة دكتور كويس وقريب»</h3><p>سؤال يُقال في جروبات الأمهات أو عند البحث.</p></article><article><span>02 / أعمق</span><h3>«هل هذا التشخيص موثوق؟»</h3><p>خوف من أن يصبح التأخير أو تجاهل العرض الصغير مشكلة أكبر.</p></article><article className="layers__dark"><span>03 / خفي</span><h3>«هل فاتني شيء كان يجب أن أنتبه له؟»</h3><p>عبء المسؤولية والذنب المرتبطين بأي قرار في صحة الطفل.</p></article></div><div className="context"><span><MessageCircleMore /> لحظة البحث: البيت، فيسبوك، وجروبات الأمهات.</span><span><HeartPulse /> المحفز: عرض غير طبيعي، تطعيم، أو توصية موثوقة.</span></div></div></section>;
+    if (current === 3) return <section className="slide market" aria-labelledby="title"><header className="heading heading--light"><div><Eyebrow ink>خريطة المنافسة / 07–08</Eyebrow><h2 id="title">الفراغ ليس في «عيادة أخرى».<br />الفراغ في <em>سهولة العثور والثقة.</em></h2></div><Pill dark>أبو حماد وما حولها</Pill></header><div className="market__grid"><div className="chart"><div className="chart__head"><div><span>مقارنة التقييمات الظاهرة</span><b>الخريطة تكافئ الأدلة القابلة للبحث</b></div><small>الرقم داخل الشريط = عدد المراجعات</small></div><ResponsiveContainer width="100%" height={245}><BarChart data={competitors} layout="vertical" margin={{top:4,right:38,left:4,bottom:0}}><CartesianGrid horizontal={false} stroke="rgba(32,36,40,.11)" /><XAxis type="number" domain={[0,5]} axisLine={false} tickLine={false} ticks={[0,1,2,3,4,5]} tick={{fill:"#62666a",fontSize:11}} /><YAxis type="category" dataKey="name" axisLine={false} tickLine={false} width={76} tick={{fill:"#202428",fontSize:12,fontWeight:600}} /><Tooltip cursor={{fill:"rgba(217,81,71,.08)"}} formatter={(v:number)=>[`${v} / 5`,`التقييم`]} labelFormatter={l=>`المنشأة: ${l}`} /><Bar dataKey="rating" radius={[0,7,7,0]} barSize={20}>{competitors.map(x=><Cell key={x.name} fill={x.reviews>=30?"#2D5D6A":"#D95147"} />)}<LabelList dataKey="reviews" position="right" formatter={(v:number)=>`${v} مراجعة`} fill="#202428" fontSize={10} /></Bar></BarChart></ResponsiveContainer></div><div className="market__callout"><img src={asset.market} alt="خريطة مفاهيمية للسوق المحلي" /><div><Pill coral>الفجوة الحرجة</Pill><h3>Google Business Profile غير ظاهر بوضوح.</h3><p>قبل أي إعلان: اجعل العيادة قابلة للاكتشاف، ثم اجمع أول 10 تقييمات حقيقية.</p><span><Navigation /> أولوية دون تأخير</span></div></div></div><div className="market__notes">{competitors.slice(0,3).map(x=><span key={x.name}><b>{x.distance}</b>{x.note}</span>)}</div></section>;
+    if (current === 4) return <section className="slide mechanism" aria-labelledby="title"><div><Eyebrow ink>الميزة الفارقة / 05–06</Eyebrow><h2 id="title">دكتور واحد.<br />مساران قريبان.<br /><em>سجل واحد للطفل.</em></h2></div><div className="mechanism__board"><article><span>01</span><Stethoscope /><b>ماجستير حديثي الولادة</b><p>تخصص محدد يتصدر الرسالة، لا طب أطفال عام فحسب.</p></article><i /><article><span>02</span><HeartPulse /><b>ثبات نفس الطبيب</b><p>سجل متابعة متصل بدلاً من تشخيص منقطع كل مرة.</p></article><i /><article className="mechanism__accent"><span>03</span><MapPinned /><b>موقعان قريبان</b><p>أبو حماد والعباسة؛ قرب يحوّل الثقة إلى زيارة.</p></article></div><aside className="mechanism__quote"><Quote /><p>«بدل الاختيار بين مستشفى واسع بلا تخصص عميق وطبيب متخصص بحجز غير واضح، توحّد العيادة التخصص الدقيق والاستمرارية والقرب.»</p></aside></section>;
+    if (current === 5) { const o=objections[objectionIndex], Icon=o.icon; return <section className="slide objections" aria-labelledby="title"><header className="heading"><div><Eyebrow>الاعتراضات / 09</Eyebrow><h2 id="title">كل تردد قابل<br />للتحويل إلى دليل.</h2></div><p>اختر الاعتراض لتظهر الاستجابة التي يجب أن تراها الأم قبل أن تضغط للحجز.</p></header><div className="objections__grid"><nav>{objections.map((x,i)=>{const I=x.icon; return <button key={x.type} className={i===objectionIndex?"active":""} onClick={()=>setObjectionIndex(i)}><I /><span>{x.type}</span><ChevronLeft /></button>})}</nav><article className="objection"><div className="objection__title"><span><Icon /></span><div><Pill coral>اعتراض: {o.type}</Pill><h3>{o.title}</h3></div></div><div className="objection__answers"><div><span>الرد</span><p>{o.response}</p></div><div><span>في الكريتيف</span><p>{o.creative}</p></div></div><footer><ClipboardCheck /><b>قاعدة تنفيذ:</b><p>أجب عن الاعتراض داخل الإعلان نفسه، لا بعد أن يضيع الاهتمام في صندوق الرسائل.</p></footer></article></div></section> }
+    if (current === 6) return <section className="slide triggers" aria-labelledby="title"><div className="triggers__intro"><Eyebrow>محفزات الشراء / 10</Eyebrow><h2 id="title">لا تبدأ الرسالة من الخدمة.<br />ابدأ من <em>لحظة القلق.</em></h2><p>المحتوى لا يخلق الحاجة، لكنه يصل إلى الأهل في اللحظة التي يبحثون فيها عن إجابة موثوقة.</p><img src={asset.framework} alt="رموز ورقية تمثل إطار عمل بناء الثقة" /></div><div className="triggers__panel"><div className="filters"><span>اعرض حسب النوع</span>{["الكل","عاطفي","منطقي","ثقة اجتماعية"].map(x=><button key={x} className={filter===x?"active":""} onClick={()=>setFilter(x)}>{x}</button>)}</div>{visibleTriggers.map((x,i)=><article key={x.label}><span>0{i+1}</span><div><div><h3>{x.label}</h3><Pill coral={x.priority.includes("جداً")}>{x.priority}</Pill></div><p>{x.action}</p></div><MoveUpRight /></article>)}</div></section>;
+    return <section className="slide closing" aria-labelledby="title"><div className="closing__main"><Eyebrow ink>الاستراتيجية في جملة / 11</Eyebrow><h2 id="title">نبني ثقة الأم في<br /><em>القرار القريب والدقيق.</em></h2><p>نقدّم متابعة طبية متخصصة لحديثي الولادة والأطفال لأمهات أبو حماد والعباسة، عبر دكتور واحد حاصل على ماجستير في حديثي الولادة، بمتابعة ثابتة في موقعين قريبين بدل التنقل بين أطباء مختلفين كل مرة.</p></div><div className="plan"><div><Sparkles /> الحركة التالية</div><ol><li><span>01</span><p><b>ثبّت قابلية الاكتشاف</b>Google Business Profile واضح ومكتمل للموقعين.</p></li><li><span>02</span><p><b>اجمع دليل ثقة حقيقياً</b>أول 10 تقييمات حقيقية بعد الزيارة، بلا محاكاة أو ادعاء.</p></li><li><span>03</span><p><b>وحّد رحلة الحجز</b>واتساب مباشر، رسالة ترحيب، وزمن رد متوقع.</p></li><li><span>04</span><p><b>أطلق رسائل مرتبطة بالمحفزات</b>تطعيم، عرض غير طبيعي، قرب الولادة، ومواعيد الموقعين.</p></li></ol></div><footer><div><img src={asset.mark} alt="علامة إشارات سريرية" /><span>CLINICAL<br />SIGNALS</span></div><span>انتهى العرض / استخدم السكة للعودة إلى أي فصل</span></footer></section>;
+  };
+
+  return <main className="presentation" dir="rtl"><header className="appbar"><div className="brand"><img src={asset.mark} alt="علامة إشارات سريرية" /><div><b>إشارات سريرية</b><span>Clinical Signals / Strategy Unit</span></div></div><div className="appbar__middle"><i /> عيادة د. سيف موهوب <em /> تشخيص سوق محلي</div><div className="count"><b>{String(current+1).padStart(2,"0")}</b> / {String(slides.length).padStart(2,"0")}</div></header><aside className="rail" aria-label="فصول العرض"><div className="rail__progress"><i style={{height:`${(current+1)/slides.length*100}%`}} /></div>{slides.map(([n,label,title],i)=><button key={n} onClick={()=>go(i)} className={i===current?"active":""}><span>{n}</span><div><b>{label}</b><small>{title}</small></div></button>)}</aside><section className="stage" aria-live="polite"><AnimatePresence mode="wait"><motion.div key={current} initial={anim.initial} animate={anim.animate} exit={anim.exit} transition={anim.transition} className="motion">{page()}</motion.div></AnimatePresence></section><footer className="controls"><div className="keys"><kbd>←</kbd><kbd>→</kbd> للتنقل</div><div><button onClick={()=>go(current-1)} disabled={current===0} aria-label="السابق"><ArrowRight /></button><button className="next" onClick={()=>go(current+1)} disabled={current===slides.length-1}>{current===slides.length-1?"انتهى العرض":"تابع"}<ArrowLeft /></button></div></footer></main>;
 }

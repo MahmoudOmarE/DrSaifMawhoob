@@ -1,0 +1,9 @@
+/** امتداد «إشارات سريرية»: المقاييس التشخيصية تدعم العنوان ولا تنافسه. */
+.cover__source { font-family: "DM Mono", monospace !important; letter-spacing: .06em !important; }
+.cover__statement p { max-width: 585px !important; }
+.diagnostic { display: flex; gap: 9px; margin-top: 20px; }
+.diagnostic span { display: flex; align-items: center; gap: 7px; padding: 8px 10px; border: 1px solid rgba(255,253,250,.22); background: rgba(32,36,40,.35); color: #babdb9; font-size: 10px; }
+.diagnostic i { width: 5px; height: 5px; border-radius: 50%; background: #f07a70; }
+.diagnostic b { color: #fffdfa; font-weight: 600; }
+@media (max-width: 760px) { .diagnostic { display: none !important; } }
+
