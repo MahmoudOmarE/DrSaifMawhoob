@@ -77,6 +77,8 @@ function writeToLogFile(source: LogSource, entries: unknown[]) {
 function vitePluginManusDebugCollector(): Plugin {
   return {
     name: "manus-debug-collector",
+    // هذا المكوّن للتطوير المحلي فقط، ولا يجب أن يضيف مسارات /__manus__ إلى GitHub Pages.
+    apply: "serve",
 
     transformIndexHtml(html) {
       if (process.env.NODE_ENV === "production") {
@@ -206,6 +208,8 @@ function vitePluginStorageProxy(): Plugin {
 const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector(), vitePluginStorageProxy()];
 
 export default defineConfig({
+  // المسارات النسبية تجعل المخرجات تعمل على نطاق GitHub Pages الفرعي للمستودع.
+  base: "./",
   plugins,
   resolve: {
     alias: {
