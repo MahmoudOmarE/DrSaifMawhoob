@@ -34,24 +34,24 @@ export default function Home() {
 
   const slides = [
     <section className="deck-slide" key="cover">
-      <Eyebrow>Product Brain</Eyebrow>
-      <h1>عيادة د. سيف موهوب — <span>خريطة المنتج الاستراتيجية الكاملة</span></h1>
+      <Eyebrow>Service Brain</Eyebrow>
+      <h1>عيادة د. سيف موهوب — <span>خريطة الخدمة الاستراتيجية الكاملة</span></h1>
       <p className="lede">11 قسم — من نواة خدمة طب الأطفال وحديثي الولادة حتى الاستراتيجية النهائية في جملة واحدة.</p>
     </section>,
     <section className="deck-slide" key="core">
-      <Eyebrow>01 · Product Core · جوهر المنتج</Eyebrow>
-      <h2>نواة المنتج</h2>
+      <Eyebrow>01 · Service Core · جوهر الخدمة</Eyebrow>
+      <h2>نواة الخدمة</h2>
       <Table className="mt18"><tbody>
-        <tr><td className="label-cell">المنتج</td><td>خدمة الكشف والمتابعة الطبية لطب الأطفال وحديثي الولادة — عيادة د. سيف موهوب</td></tr>
+        <tr><td className="label-cell">الخدمة</td><td>خدمة الكشف والمتابعة الطبية لطب الأطفال وحديثي الولادة — عيادة د. سيف موهوب</td></tr>
         <tr><td className="label-cell">الفئة</td><td>Local Healthcare / Pediatric Care — خدمة طبية محلية B2C في الشرقية، مصر</td></tr>
         <tr><td className="label-cell">نطاق السعر</td><td>🔶 غير محدد — يحتاج تأكيد سعر الكشف الأول والمتابعة والفرق بين الموقعين</td></tr>
-        <tr><td className="label-cell">نوع المنتج</td><td>خدمة مباشرة: كشف، استشارة، ومتابعة دورية تُسلّم وقت الزيارة</td></tr>
+        <tr><td className="label-cell">نوع الخدمة</td><td>خدمة مباشرة: كشف، استشارة، ومتابعة دورية تُسلّم وقت الزيارة</td></tr>
         <tr><td className="label-cell">الجمهور</td><td>أمهات وآباء حديثي الولادة وحتى 5 سنوات في أبو حماد والعباسة ومحيطهما</td></tr>
         <tr><td className="label-cell">المنصة</td><td>Facebook — 51K متابع؛ TikTok والحساب الشخصي قنوات مساندة غير موحّدة</td></tr>
       </tbody></Table>
     </section>,
     <section className="deck-slide" key="breakdown">
-      <Eyebrow>02 · Product Breakdown · تفكيك المنتج</Eyebrow>
+      <Eyebrow>02 · Service Breakdown · تفكيك الخدمة</Eyebrow>
       <h2>بيعمل إيه بالظبط، وإزاي</h2>
       <div className="grid2 mt16">
         <Panel><b>إيه اللي بيعمله فعلاً</b><p className="lede small">كشف وتشخيص ومتابعة متخصصة: تقييم النمو، التطعيمات، استشارات الرضاعة والتغذية، ومتابعة الأعراض غير الطبيعية.</p></Panel>
@@ -111,7 +111,7 @@ export default function Home() {
       <Flag>⚠ Google Business Profile للعيادة غير ظاهر بوضوح: بناء الملف وجمع أول 10 تقييمات حقيقية أولوية فورية</Flag>
     </section>,
     <section className="deck-slide" key="proof">
-      <Eyebrow>08 · Reason to Believe · سبب شراء المنتج</Eyebrow>
+      <Eyebrow>08 · Reason to Believe · سبب اختيار الخدمة</Eyebrow>
       <h2>إيه عندنا فعلياً وإيه الناقص</h2>
       <Table className="mt16 compact"><thead><tr><th>نوع الدليل</th><th>الوضع الحالي</th><th>متاح؟</th></tr></thead><tbody>
         <tr><td>نتيجة مرئية</td><td>صور العيادة والشهادات وفريق العمل مناسبة، مع احترام خصوصية المرضى</td><td className="num">جزئياً</td></tr>
@@ -146,7 +146,7 @@ export default function Home() {
       <Eyebrow>11 · Strategy · الاستراتيجية</Eyebrow>
       <h2>الاستراتيجية في جملة واحدة</h2>
       <div className="grid2 mt16">
-        <Panel><b className="signal">المنتج</b><p className="lede small">كشف ومتابعة متخصصة لطب الأطفال وحديثي الولادة.</p></Panel>
+        <Panel><b className="signal">الخدمة</b><p className="lede small">كشف ومتابعة متخصصة لطب الأطفال وحديثي الولادة.</p></Panel>
         <Panel><b className="signal">الجمهور</b><p className="lede small">أمهات أطفال حديثي الولادة وحتى 5 سنوات في أبو حماد والعباسة.</p></Panel>
         <Panel><b className="signal">المشكلة</b><p className="lede small">غياب مسار ثقة وحجز واضح عند القلق من تشخيص غير متخصص.</p></Panel>
         <Panel><b className="signal">الميكانيزم</b><p className="lede small">تخصص ماجستير + طبيب ثابت + موقعان قريبان.</p></Panel>
